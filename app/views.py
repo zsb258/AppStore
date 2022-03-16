@@ -22,15 +22,15 @@ def index(request):
 
 # Create your views here.
 def view(request, id):
-    """Shows the main page"""
+    """Shows the view details page"""
     
     ## Use raw query to get a user
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM users WHERE email = %s", [id])
-        user = cursor.fetchone()
-    result_dict = {'user': user}
+        selected_user = cursor.fetchone()
+    result_dict = {'user': selected_user}
 
-    return render(request,'app/view.html',result_dict)
+    return render(request,'app/view.html', result_dict)
 
 # Create your views here.
 def add(request):
