@@ -31,5 +31,5 @@ URI="postgres://$DB_USER:$DB_PASSWORD@$DB_HOST:$DB_PORT/$DB_NAME"
 psql ${URI} -f sql/clean.sql
 psql ${URI} -f sql/appschema.sql
 psql ${URI} -f sql/users-data.sql
-psql ${URI} -f sql/apartmentdata-data.sql
-psql ${URI} -f sql/rental-data.sql
+psql ${URI} -f sql/apartments-data.sql
+psql ${URI} -f sql/rentals-data.sql
