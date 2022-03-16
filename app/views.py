@@ -24,11 +24,11 @@ def index(request):
 def view(request, id):
     """Shows the main page"""
     
-    ## Use raw query to get a customer
+    ## Use raw query to get a user
     with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM customers WHERE customerid = %s", [id])
-        customer = cursor.fetchone()
-    result_dict = {'cust': customer}
+        cursor.execute("SELECT * FROM users WHERE email = %s", [id])
+        user = cursor.fetchone()
+    result_dict = {'user': user}
 
     return render(request,'app/view.html',result_dict)
 
