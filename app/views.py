@@ -182,13 +182,13 @@ def search(request):
                 result_dict = {'records': apartments}
 
                 return render(request,'app/search.html', result_dict)
+    else:
+        context['status'] = status
+        ## Use sample query to get apartments
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM apartments ORDER BY price ASC")
+            apartments = cursor.fetchall()
 
-    context['status'] = status
-    ## Use sample query to get apartments
-    with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM apartments ORDER BY price ASC")
-        apartments = cursor.fetchall()
+        result_dict = {'records': apartments}
 
-    result_dict = {'records': apartments}
-
-    return render(request,'app/search.html', result_dict)
+        return render(request,'app/search.html', result_dict)
