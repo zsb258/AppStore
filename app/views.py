@@ -189,9 +189,9 @@ def search(request):
                 ])                
                 apartments = cursor.fetchall()
 
-                result_dict = {'records': apartments}
+            result_dict = {'records': apartments}
 
-                return render(request,'app/search.html', result_dict)
+            return render(request,'app/search.html', result_dict)
     else:
         context['status'] = status
         ## Use sample query to get apartments
