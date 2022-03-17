@@ -213,7 +213,7 @@ def search(request):
         if request.POST['action'] == 'search':
             with connection.cursor() as cursor:
                 cursor.execute(
-                "SELECT * FROM apartments WHERE country = %s AND city = %s AND num_guests >= %s",
+                "SELECT * FROM apartments apt, overall_ratings rts WHERE apt.apartment_id = rts.apartment_id AND country = %s AND city = %s AND num_guests >= %s ORDER BY apt.price",
                 [
                     request.POST['country'],
                     request.POST['city'],
@@ -227,8 +227,19 @@ def search(request):
     else:
         context['status'] = status
         ## Use sample query to get apartments
+
+        """
+        SQL VIEW CREATED:
+
+        CREATE VIEW overall_ratings AS
+        SELECT ap.apartment_id, CAST(AVG(r.rating) AS DECIMAL(2, 1))
+        FROM apartments ap, rentals r
+        WHERE ap.apartment_id = r.apartment_id
+        GROUP BY ap.apartment_id;
+        """
+
         with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM apartments ORDER BY price ASC")
+            cursor.execute("SELECT * FROM apartments apt, overall_ratings rts WHERE apt.apartment_id = rts.apartment_id ORDER BY apt.price"),
             apartments = cursor.fetchall()
 
         result_dict = {'records': apartments}

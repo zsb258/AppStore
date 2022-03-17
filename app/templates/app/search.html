@@ -78,6 +78,8 @@
             <th>Amenities</th>
             <th>House Rules</th>
             <th>Price</th>
+            <th>Overall Rating</th>
+            <th>Action</th>
         </thead>
         {% for apartment in records %}
         <tr>
@@ -90,6 +92,8 @@
             <td> {{ apartment.9 }} </td>
             <td> {{ apartment.10 }} </td>
             <td> {{ apartment.11 }} </td>
+            <td> {{ apartment.13 }} </td>
+            <td> <button>Book Apartment(to implement)</button> </td>
         </tr>
         {% endfor %}
     </table>
