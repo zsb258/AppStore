@@ -79,16 +79,16 @@ def edit(request, id):
     context ={}
 
     # fetch the object related to passed email and password
-    if request.POST:
-        with connection.cursor() as cursor:
-            cursor.execute(
-                "SELECT * FROM users WHERE email = %s AND password = %s",
-                [
-                    id,
-                    request.POST['password']
-                ]
-                )
-            obj = cursor.fetchone()
+
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT * FROM users WHERE email = %s AND password = %s",
+            [
+                id,
+                request.POST['password']
+            ]
+            )
+        obj = cursor.fetchone()
 
     status = ''
     # save the data from the form
