@@ -17,7 +17,7 @@ def index(request):
         if request.POST['action'] == 'search':
             with connection.cursor() as cursor:
                 cursor.execute(
-                "SELECT * FROM apartments WHERE country = %s AND city = %s AND num_guests = %s",
+                "SELECT * FROM apartments WHERE country = %s AND city = %s AND num_guests <= %s",
                 [
                     request.POST['country'],
                     request.POST['city'],
@@ -27,7 +27,7 @@ def index(request):
 
                 result_dict = {'records': apartments}
 
-                return redirect(request,'app/search.html', result_dict)
+                return render(request,'app/search.html', result_dict)
 
 
 
@@ -91,9 +91,6 @@ def add(request):
 
 # Create your views here.
 def edit(request, id):
-
-
-
     """Shows the main page"""
 
     # dictionary for initial data with
@@ -151,7 +148,7 @@ def checkpw(request, id):
         
             if user != None:
                 if user[3] == request.POST['password']:
-                    return redirect('edit/%s', [id])
+                    return redirect('edit/{{ obj.2 }}')
                 else:
                     status = 'Incorrect password'
 
@@ -163,12 +160,28 @@ def checkpw(request, id):
 
 
 
-def search(request, resource):
+def search(request):
     """Shows the main page"""
     context = {}
     status = ''
 
+    if request.POST:
+        if request.POST['action'] == 'search':
+            with connection.cursor() as cursor:
+                cursor.execute(
+                "SELECT * FROM apartments WHERE country = %s AND city = %s AND num_guests <= %s",
+                [
+                    request.POST['country'],
+                    request.POST['city'],
+                    request.POST['num_guests']
+                ])                
+                apartments = cursor.fetchall()
 
-    result_dict = {'records': resource}
+                result_dict = {'records': apartments}
+
+                return render(request,'app/search.html', result_dict)
+
+
+    result_dict = {'records': apartments}
 
     return render(request,'app/search.html', result_dict)
