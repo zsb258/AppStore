@@ -155,19 +155,41 @@ def checkpw(request, id):
     status = ''
 
     if request.POST:
+        if request.POST['action'] == 'enterpw':
         ## Check if email is already in the table
-        with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM users WHERE email = %s", [id])
-            user = cursor.fetchone()
-        
-            if user != None:
-                if user[3] == request.POST['password']:
-                    return render(request, "app/edit.html", result_dict)
-                else:
-                    status = 'Incorrect password'
+            with connection.cursor() as cursor:
+                cursor.execute("SELECT * FROM users WHERE email = %s", [id])
+                user = cursor.fetchone()
+                result_dict['user'] = user
+            
+                if user != None:
+                    if user[3] == request.POST['password']:
+                        return render(request, "app/edit.html", result_dict)
+                    else:
+                        status = 'Incorrect password'
+
+        elif request.POST['action'] == 'Update':
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    "UPDATE users SET first_name = %s, last_name = %s, date_o_birth = %s, country = %s credit_card_type = %s credit_card_no = %s WHERE email = %s",
+                    [
+                        request.POST['first_name'],
+                        request.POST['last_name'],
+                        request.POST['date_of_birth'],
+                        request.POST['country'],
+                        request.POST['credit_card_type'],
+                        request.POST['credit_card_no'],
+                        id
+                    ]
+                    )
+                status = 'User edited successfully!'
+                cursor.execute("SELECT * FROM users WHERE email = %s", [id])
+                obj = cursor.fetchone()
+
+            context = {'status': status}
+            return render(request, "app/edit.html", context)
 
     context = {"status": status}
-
     return render(request, "app/checkpw.html")
 
 

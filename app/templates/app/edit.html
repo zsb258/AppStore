@@ -3,7 +3,7 @@
     <title>Edit User Details</title>
 </head> 
 <body>
-    <h2>Edit {{obj.5}}</h2>
+    <h2>Edit {{user.5}}</h2>
     <a href="/">Back to home</a>
 
     <p style="color:red">{{ status|safe }}</p>
@@ -23,7 +23,7 @@
             <div class="controls">
                 <input 
                     type="text" name="first_name" 
-                    value="{{obj.0}}"
+                    value="{{user.0}}"
                     maxlength="16" class="textinput textInput" 
                     required="" id="id_first_name">
             </div>
@@ -37,7 +37,7 @@
             <div class="controls">
                 <input
                     type="text" name="last_name" 
-                    value="{{obj.1}}"
+                    value="{{user.1}}"
                     maxlength="16" class="textinput textInput" 
                     required="" id="id_last_name">
             </div>
@@ -52,7 +52,7 @@
             <div class="controls">
                 <input 
                     type="text" name="date_of_birth" 
-                    value="{{obj.4}}"
+                    value="{{user.4}}"
                     class="dateinput" 
                     required="" id="id_dob">
             </div>
@@ -67,7 +67,7 @@
             <div class="controls">
                 <input 
                     type="text" name="country" 
-                    value="{{obj.6}}"
+                    value="{{user.6}}"
                     maxlength="32" class="textinput textInput" 
                     required="" id="id_country">
             </div>
@@ -114,7 +114,7 @@
         
 
         <br>
-        <button type="submit" value="Update">Update</button>
+        <button type="submit" name="action" value="Update">Update</button>
     </form>
 </body>
 </html>
