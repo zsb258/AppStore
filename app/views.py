@@ -27,7 +27,7 @@ def index(request):
 
                 result_dict = {'records': apartments}
 
-                return render(request,'app/search.html', result_dict)
+                return redirect(request,'app/search.html', result_dict)
 
 
 
@@ -151,7 +151,7 @@ def checkpw(request, id):
         
             if user != None:
                 if user[3] == request.POST['password']:
-                    return redirect(f'edit/{id}')
+                    return redirect('edit/%s', [id])
                 else:
                     status = 'Incorrect password'
 
@@ -163,23 +163,12 @@ def checkpw(request, id):
 
 
 
-def search(request):
+def search(request, resource):
     """Shows the main page"""
     context = {}
     status = ''
 
-    if request.POST:
-        if request.POST['action'] == 'search':
-            with connection.cursor() as cursor:
-                cursor.execute(
-                    "SELECT * FROM apartments WHERE country = %s AND city = %s AND num_guests = %s",
-                    [
-                        request.POST['country'],
-                        request.POST['city'],
-                        request.POST['num_guests']
-                    ])                
-                apartments = cursor.fetchall()
 
-    result_dict = {'records': apartments}
+    result_dict = {'records': resource}
 
     return render(request,'app/search.html', result_dict)
