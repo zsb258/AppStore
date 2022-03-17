@@ -184,5 +184,18 @@ def search(request):
                 return render(request,'app/search.html', result_dict)
 
     context['status'] = status
+    ## Use sample query to get apartments
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT * FROM apartments WHERE country = %s AND city = %s AND num_guests >= %s",
+                [
+                    "Malaysia",
+                    "Kota Bharu",
+                    "1"
+                ])
+        )
+        users = cursor.fetchall()
+
+    result_dict = {'records': users}
 
     return render(request,'app/search.html', context)
