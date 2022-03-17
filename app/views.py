@@ -189,11 +189,10 @@ def search(request):
         cursor.execute(
             "SELECT * FROM apartments WHERE country = %s AND city = %s AND num_guests >= %s",
                 [
-                    "Malaysia",
-                    "Kota Bharu",
-                    "1"
+                "Malaysia",
+                "Kota Bharu",
+                "1"
                 ])
-        )
         users = cursor.fetchall()
 
     result_dict = {'records': users}
