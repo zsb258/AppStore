@@ -58,7 +58,7 @@ def view(request, id):
         cursor.execute(
             "SELECT * FROM apartments ap, rentals r WHERE ap.apartment_id = r.apartment_id AND r.guest = %s",
             [id])
-        selected_rentals = cursor.fetchone()
+        selected_rentals = cursor.fetchall()
 
     result_dict['records'] = selected_rentals
 
