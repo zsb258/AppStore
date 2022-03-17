@@ -39,20 +39,29 @@ def add(request):
     status = ''
 
     if request.POST:
-        ## Check if customerid is already in the table
+        ## Check if email is already in the table
         with connection.cursor() as cursor:
 
-            cursor.execute("SELECT * FROM customers WHERE customerid = %s", [request.POST['customerid']])
-            customer = cursor.fetchone()
-            ## No customer with same id
-            if customer == None:
+            cursor.execute("SELECT * FROM users WHERE email = %s", [request.POST['email']])
+            user = cursor.fetchone()
+            ## No user with same email
+            if user == None:
                 ##TODO: date validation
-                cursor.execute("INSERT INTO customers VALUES (%s, %s, %s, %s, %s, %s, %s)"
-                        , [request.POST['first_name'], request.POST['last_name'], request.POST['email'],
-                           request.POST['dob'] , request.POST['since'], request.POST['customerid'], request.POST['country'] ])
+                cursor.execute(
+                    "INSERT INTO users VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+                    [
+                    request.POST['first_name'],
+                    request.POST['last_name'],
+                    request.POST['email'],
+                    request.POST['password'],
+                    request.POST['date_of_birth'],
+                    request.POST['country'],
+                    request.POST['credit_card_type'],
+                    request.POST['credit_card_no']
+                    ])
                 return redirect('index')    
             else:
-                status = 'Customer with ID %s already exists' % (request.POST['customerid'])
+                status = 'User with email %s already exists' % (request.POST['email'])
 
 
     context['status'] = status
