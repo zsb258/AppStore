@@ -232,7 +232,7 @@ def search(request):
         SQL VIEW CREATED:
 
         CREATE VIEW overall_ratings AS
-        SELECT ap.apartment_id, CAST(AVG(r.rating) AS DECIMAL(2, 1))
+        SELECT ap.apartment_id, CAST(AVG(r.rating) AS DECIMAL(2, 1)) AS avg_rating
         FROM apartments ap, rentals r
         WHERE ap.apartment_id = r.apartment_id
         GROUP BY ap.apartment_id;
@@ -245,3 +245,19 @@ def search(request):
         result_dict = {'records': apartments}
 
         return render(request,'app/search.html', result_dict)
+
+
+def apartment(request, id):
+    """Shows the view details page"""
+    
+    result_dict = dict()
+
+    ## Use raw query to get an apartment
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT * FROM apartments apt, overall_ratings rts WHERE apt.apartment_id = rts.apartment_id AND apt.apartment_id = %s",
+            [id])
+        selected_apt = cursor.fetchone()
+    result_dict['apt'] = selected_apt
+
+    return render(request,'app/apartment.html', result_dict)
