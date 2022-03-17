@@ -186,7 +186,7 @@ def search(request):
     context['status'] = status
     ## Use sample query to get apartments
     with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM apartments WHERE ORDER BY price ASC")
+        cursor.execute("SELECT * FROM apartments ORDER BY price ASC")
         apartments = cursor.fetchall()
 
     result_dict = {'records': apartments}
