@@ -229,7 +229,7 @@ def search(request):
         ## Use sample query to get apartments
 
         """
-        SQL VIEW CREATED:
+        SQL VIEW ALREADY CREATED:
 
         CREATE VIEW overall_ratings AS
         SELECT ap.apartment_id, CAST(AVG(r.rating) AS DECIMAL(2, 1)) AS avg_rating
