@@ -181,11 +181,11 @@ def search(request):
         if request.POST['action'] == 'search':
             with connection.cursor() as cursor:
                 cursor.execute(
-                "SELECT * FROM apartments WHERE country LIKE %s AND city LIKE %s AND num_guests >= %s",
+                "SELECT * FROM apartments WHERE country = %s AND city = %s AND num_guests >= %s",
                 [
-                    request.POST['country'] if request.POST['country'] else "%",
-                    request.POST['city'] if request.POST['city'] else "%",
-                    request.POST['num_guests'] if request.POST['num_guests'] else "%"
+                    request.POST['country'],
+                    request.POST['city'],
+                    request.POST['num_guests']
                 ])                
                 apartments = cursor.fetchall()
 
