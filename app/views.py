@@ -17,7 +17,7 @@ def index(request):
         if request.POST['action'] == 'search':
             with connection.cursor() as cursor:
                 cursor.execute(
-                "SELECT * FROM apartments WHERE country = %s AND city = %s AND num_guests <= %s",
+                "SELECT * FROM apartments WHERE country = %s AND city = %s AND num_guests >= %s",
                 [
                     request.POST['country'],
                     request.POST['city'],
@@ -27,7 +27,7 @@ def index(request):
 
                 result_dict = {'records': apartments}
 
-                return render(request,'app/search.html', result_dict)
+                return redirect(request,'search', result_dict)
 
 
 
@@ -160,7 +160,7 @@ def checkpw(request, id):
 
 
 
-def search(request):
+def search(request, id):
     """Shows the main page"""
     context = {}
     status = ''
@@ -169,7 +169,7 @@ def search(request):
         if request.POST['action'] == 'search':
             with connection.cursor() as cursor:
                 cursor.execute(
-                "SELECT * FROM apartments WHERE country = %s AND city = %s AND num_guests <= %s",
+                "SELECT * FROM apartments WHERE country = %s AND city = %s AND num_guests >= %s",
                 [
                     request.POST['country'],
                     request.POST['city'],
