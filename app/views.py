@@ -50,7 +50,14 @@ def view(request, id):
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM users WHERE email = %s", [id])
         selected_user = cursor.fetchone()
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT * FROM apartments ap, rentals r WHERE ap.apartment_id = r.apartment_id AND r.guest = %s",
+            [id])
+        selected_rentals = cursor.fetchone()
+
     result_dict = {'user': selected_user}
+    result_dict = {'records': selected_rentals}
 
     return render(request,'app/view.html', result_dict)
 

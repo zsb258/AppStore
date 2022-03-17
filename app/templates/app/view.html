@@ -38,5 +38,30 @@
             <td> {{ user.6 }} </td>
         </tr>
     </table>
+
+    <br/><br/>
+
+    <h2>Rental History</h2>
+    <br/>
+    <table border=1>
+        <thead>
+            <th>Country</th>
+            <th>City</th>
+            <th>Check-In</th>
+            <th>Check-Out</th>
+            <th>Total Price</th>
+            <th>Rating</th>
+        </thead>
+        {% for rental in records %}
+        <tr>
+            <td> {{ rental.2 }} </td>
+            <td> {{ rental.3 }} </td>
+            <td> {{ rental.14 }} </td>
+            <td> {{ rental.15 }} </td>
+            <td> {{ rental.17 }} </td>
+            <td> {{ rental.18 }} </td>
+        </tr>
+        {% endfor %}
+    </table>
 </body>
 </html>

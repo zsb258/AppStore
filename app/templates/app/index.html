@@ -5,67 +5,10 @@
 </head> 
 <body>
     <h2>Search for Apartments</h2>
-    <!-- Create a Form -->
-    <form method="POST">
-        <!-- Security token by Django -->
-        {% csrf_token %}
-        <!-- form -->
-
-        <div id="div_id_country" class="control-group">
-            <label for="id_country" class="control-label requiredField">
-                Country
-                <span class="asteriskField">*</span> 
-            </label>
-            <div class="controls">
-                <input 
-                    type="text" name="country" 
-                    maxlength="16" class="textinput textInput" 
-                    required="" id="id_country">
-            </div>
-        </div>
-
-
-        <div id="div_id_city" class="control-group">
-            <label for="id_city" class="control-label requiredField">
-                City
-                <span class="asteriskField">*</span> 
-            </label>
-            <div class="controls">
-                <input 
-                    type="text" name="city" 
-                    maxlength="32" class="textinput textInput" 
-                    required="" id="id_city">
-            </div>
-        </div>
-
-
-        <div id="div_id_num_guests" class="control-group">
-            <label for="id_num_guests" class="control-label requiredField">
-                Number of Guests
-                <span class="asteriskField">*</span> 
-            </label>
-            <div class="controls">
-                <input 
-                    type="number" name="city" 
-                    class="textinput textInput" 
-                    min="1" step="1"
-                    required="" id="id_num_guests">
-            </div>
-        </div>
-
-
-
-        <br>
-        <a href="search">
-            <button type="submit" name=action value="Search">Search</button>
-        </a>
-    </form>
-
     <br>
-    <a href="search">Search</a>
-
-
-
+    <a href="search">
+        <button>Search</button>
+    </a>
 
 
 
@@ -92,11 +35,11 @@
 
                 <form method="POST" style="display: inline;">
                 {% csrf_token %}
-                <input type="hidden" name="id" value="{{ user.2 }}"/>
-                <button
+                    <input type="hidden" name="id" value="{{ user.2 }}"/>
+                    <button
                     onclick="return confirm('Are you sure you want to delete {{ user.2 }}?');" 
                     type="submit" name="action" value="delete">Delete</button> 
-              </form>
+                </form>
             </td>
         </tr>
         {% endfor %}
