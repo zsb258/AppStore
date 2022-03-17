@@ -39,8 +39,6 @@ def add(request):
     context = {}
     status = ''
 
-    insert_statement_sql = "INSERT INTO users (first_name, last_name, email, password, date_of_birth, country, credit_card_type, credit_card_no) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
-
     if request.POST:
         ## Check if email is already in the table
         with connection.cursor() as cursor:
@@ -51,17 +49,18 @@ def add(request):
             if user == None:
                 ##TODO: date validation
                 cursor.execute(
-                    insert_statement_sql,
+                    "INSERT INTO users (first_name, last_name, email, password, date_of_birth, country, credit_card_type, credit_card_no) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
                     [
-                    request.POST['first_name'],
-                    request.POST['last_name'],
-                    request.POST['email'],
-                    request.POST['password'],
-                    request.POST['date_of_birth'],
-                    request.POST['country'],
-                    request.POST['credit_card_type'],
-                    request.POST['credit_card_no']
-                    ])
+                        request.POST['first_name'],
+                        request.POST['last_name'],
+                        request.POST['email'],
+                        request.POST['password'],
+                        request.POST['date_of_birth'],
+                        request.POST['country'],
+                        request.POST['credit_card_type'],
+                        request.POST['credit_card_no']
+                    ]
+                    )
                 return redirect('index')    
             else:
                 status = 'User with email %s already exists' % (request.POST['email'])
@@ -79,10 +78,17 @@ def edit(request, id):
     # field names as keys
     context ={}
 
-    # fetch the object related to passed id
-    with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM customers WHERE customerid = %s", [id])
-        obj = cursor.fetchone()
+    # fetch the object related to passed email and password
+    if request.POST:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                "SELECT * FROM users WHERE email = %s AND password = %s",
+                [
+                    id,
+                    request.POST['password']
+                ]
+                )
+            obj = cursor.fetchone()
 
     status = ''
     # save the data from the form
@@ -90,11 +96,20 @@ def edit(request, id):
     if request.POST:
         ##TODO: date validation
         with connection.cursor() as cursor:
-            cursor.execute("UPDATE customers SET first_name = %s, last_name = %s, email = %s, dob = %s, since = %s, country = %s WHERE customerid = %s"
-                    , [request.POST['first_name'], request.POST['last_name'], request.POST['email'],
-                        request.POST['dob'] , request.POST['since'], request.POST['country'], id ])
-            status = 'Customer edited successfully!'
-            cursor.execute("SELECT * FROM customers WHERE customerid = %s", [id])
+            cursor.execute(
+                "UPDATE users SET first_name = %s, last_name = %s, date_o_birth = %s, country = %s credit_card_type = %s credit_card_no = %s WHERE email = %s",
+                [
+                    request.POST['first_name'],
+                    request.POST['last_name'],
+                    request.POST['date_of_birth'],
+                    request.POST['country'],
+                    request.POST['credit_card_type'],
+                    request.POST['credit_card_no'],
+                    id
+                ]
+                )
+            status = 'User edited successfully!'
+            cursor.execute("SELECT * FROM users WHERE email = %s", [id])
             obj = cursor.fetchone()
 
 
