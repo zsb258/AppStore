@@ -12,6 +12,25 @@ def index(request):
             with connection.cursor() as cursor:
                 cursor.execute("DELETE FROM users WHERE email = %s", [request.POST['id']])
 
+
+    if request.POST:
+        if request.POST['action'] == 'search':
+            with connection.cursor() as cursor:
+                cursor.execute(
+                "SELECT * FROM apartments WHERE country = %s AND city = %s AND num_guests = %s",
+                [
+                    request.POST['country'],
+                    request.POST['city'],
+                    request.POST['num_guests']
+                ])                
+                apartments = cursor.fetchall()
+
+                result_dict = {'records': apartments}
+
+                return render(request,'app/search.html', result_dict)
+
+
+
     ## Use raw query to get all objects
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM users ORDER BY first_name")
@@ -132,7 +151,7 @@ def checkpw(request, id):
         
             if user != None:
                 if user[3] == request.POST['password']:
-                    return redirect('edit')
+                    return redirect(f'edit/{id}')
                 else:
                     status = 'Incorrect password'
 
@@ -141,3 +160,26 @@ def checkpw(request, id):
 
 
     return render(request, "app/checkpw.html", context)
+
+
+
+def search(request):
+    """Shows the main page"""
+    context = {}
+    status = ''
+
+    if request.POST:
+        if request.POST['action'] == 'search':
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    "SELECT * FROM apartments WHERE country = %s AND city = %s AND num_guests = %s",
+                    [
+                        request.POST['country'],
+                        request.POST['city'],
+                        request.POST['num_guests']
+                    ])                
+                apartments = cursor.fetchall()
+
+    result_dict = {'records': apartments}
+
+    return render(request,'app/search.html', result_dict)

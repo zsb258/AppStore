@@ -25,5 +25,6 @@ urlpatterns = [
     path('add', app.views.add, name='add'),
     path('view/<str:id>', app.views.view, name='view'),
     path('edit/<str:id>', app.views.edit, name='edit'),
-    path('checkpw/<str:id>', app.views.checkpw, name='checkpw')
+    path('checkpw/<str:id>', app.views.checkpw, name='checkpw'),
+    path('search', app.views.search, name='search')
 ]

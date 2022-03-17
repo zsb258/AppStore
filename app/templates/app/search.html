@@ -1,0 +1,36 @@
+{% load static %}
+<html>
+<head>
+    <title>Search Results</title>
+</head> 
+<body>
+    <h2>Search Results</h2>
+    <br/>
+    <table border=1>
+        <thead>
+            <th>Country</th>
+            <th>City</th>
+            <th>Guests</th>
+            <th>Beds</th>
+            <th>Bathrooms</th>
+            <th>Property Type</th>
+            <th>Amenities</th>
+            <th>House Rules</th>
+            <th>Price</th>
+        </thead>
+        {% for user in records %}
+        <tr>
+            <td> {{ user.2 }} </td>
+            <td> {{ user.3 }} </td>
+            <td> {{ user.5 }} </td>
+            <td> {{ user.6 }} </td>
+            <td> {{ user.7 }} </td>
+            <td> {{ user.8 }} </td>
+            <td> {{ user.9 }} </td>
+            <td> {{ user.10 }} </td>
+            <td> {{ user.11 }} </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
