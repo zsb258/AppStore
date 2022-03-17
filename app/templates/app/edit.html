@@ -13,18 +13,6 @@
         <!-- Security token by Django -->
         {% csrf_token %}
         <!-- form -->
-        <div id="div_id_password" class="control-group">
-            <label for="id_password" class="control-label requiredField">
-                Enter your password
-                <span class="asteriskField">*</span>
-            </label>
-            <div class="controls">
-                <input 
-                    type="password" name="password" 
-                    maxlength="32" class="textinput textInput" 
-                    required="" id="id_password">
-            </div>
-        </div>
 
 
         <div id="div_id_first_name" class="control-group">
@@ -118,7 +106,6 @@
             <div class="controls">
                 <input 
                     type="tel" name="credit_card_no"
-                    value="{{obj.8}}"
                     inputmode="numeric" pattern="[0-9\s]{13,16}"
                     maxlength="16" class="textinput textInput" 
                     required="" id="id_ccard_no">

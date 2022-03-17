@@ -72,6 +72,9 @@ def add(request):
 
 # Create your views here.
 def edit(request, id):
+
+
+
     """Shows the main page"""
 
     # dictionary for initial data with
@@ -114,3 +117,27 @@ def edit(request, id):
     context["status"] = status
  
     return render(request, "app/edit.html", context)
+
+
+
+def checkpw(request, id):
+    context = {}
+    status = ''
+
+    if request.POST:
+        ## Check if email is already in the table
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM users WHERE email = %s", [id])
+            user = cursor.fetchone()
+        
+            if user != None:
+                if user[3] == request.POST['password']:
+                    return redirect('edit/<str:id>')
+                else:
+                    status = 'Incorrect password'
+
+
+    context['status'] = status
+
+
+    return render(request, "app/checkpw.html", context)

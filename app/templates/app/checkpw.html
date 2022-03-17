@@ -1,0 +1,29 @@
+{% load static %}
+<html>
+<head>
+    <title>Enter password for {{ obj.2 }}</title>
+</head> 
+<body>
+    <h2>Enter password</h2>
+    <form method="POST" style="display: inline;">
+        {% csrf_token %} 
+        <div id="div_id_password" class="control-group">
+            <label for="id_password" class="control-label requiredField">
+                Enter your password
+                <span class="asteriskField">*</span>
+            </label>
+            <div class="controls">
+                <input 
+                    type="password" name="password" 
+                    maxlength="32" class="textinput textInput" 
+                    required="" id="id_password">
+            </div>
+        </div>
+        <br>
+        <button type="submit" value="enterpw">Enter</button>
+    
+    </form>
+    
+
+</body>
+</html>
