@@ -127,7 +127,7 @@ def edit(request, id):
         ##TODO: date validation
         with connection.cursor() as cursor:
             cursor.execute(
-                "UPDATE users SET first_name = %s, last_name = %s, date_o_birth = %s, country = %s credit_card_type = %s credit_card_no = %s WHERE email = %s",
+                "UPDATE users SET first_name = %s, last_name = %s, date_of_birth = %s, country = %s credit_card_type = %s credit_card_no = %s WHERE email = %s",
                 [
                     request.POST['first_name'],
                     request.POST['last_name'],
@@ -171,7 +171,7 @@ def checkpw(request, id):
         elif request.POST['action'] == 'Update':
             with connection.cursor() as cursor:
                 cursor.execute(
-                    "UPDATE users SET first_name = %s, last_name = %s, date_o_birth = %s, country = %s credit_card_type = %s credit_card_no = %s WHERE email = %s",
+                    "UPDATE users SET first_name = %s, last_name = %s, date_of_birth = %s, country = %s credit_card_type = %s credit_card_no = %s WHERE email = %s",
                     [
                         request.POST['first_name'],
                         request.POST['last_name'],
