@@ -148,7 +148,7 @@ def checkpw(request, id):
         
             if user != None:
                 if user[3] == request.POST['password']:
-                    return redirect('edit/%s', id)
+                    return redirect('edit')
                 else:
                     status = 'Incorrect password'
 
