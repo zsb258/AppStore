@@ -148,7 +148,7 @@ def checkpw(request, id):
         
             if user != None:
                 if user[3] == request.POST['password']:
-                    return redirect('edit/{{ obj.2 }}')
+                    return redirect('edit/%s', id)
                 else:
                     status = 'Incorrect password'
 
