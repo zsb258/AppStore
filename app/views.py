@@ -82,11 +82,8 @@ def edit(request, id):
 
     with connection.cursor() as cursor:
         cursor.execute(
-            "SELECT * FROM users WHERE email = %s AND password = %s",
-            [
-                id,
-                request.POST['password']
-            ]
+            "SELECT * FROM users WHERE email = %s",
+            [id]
             )
         obj = cursor.fetchone()
 
