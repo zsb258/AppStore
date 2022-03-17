@@ -171,11 +171,11 @@ def search(request):
         if request.POST['action'] == 'search':
             with connection.cursor() as cursor:
                 cursor.execute(
-                "SELECT * FROM apartments WHERE country = %s AND city = %s AND num_guests >= %s",
+                "SELECT * FROM apartments WHERE country LIKE %s AND city LIKE %s AND num_guests >= %s",
                 [
-                    request.POST['country'],
-                    request.POST['city'],
-                    request.POST['num_guests']
+                    request.POST['country'] if request.POST['country'] else "%",
+                    request.POST['city'] if request.POST['city'] else "%",
+                    request.POST['num_guests'] if request.POST['num_guests'] else "%"
                 ])                
                 apartments = cursor.fetchall()
 
@@ -186,13 +186,7 @@ def search(request):
     context['status'] = status
     ## Use sample query to get apartments
     with connection.cursor() as cursor:
-        cursor.execute(
-            "SELECT * FROM apartments WHERE country = %s AND city = %s AND num_guests >= %s",
-                [
-                "Malaysia",
-                "Kota Bharu",
-                "1"
-                ])
+        cursor.execute("SELECT * FROM apartments WHERE ORDER BY price ASC")
         apartments = cursor.fetchall()
 
     result_dict = {'records': apartments}
