@@ -5,6 +5,8 @@
 </head> 
 <body>
     <h2>Search for Apartments</h2>
+    <a href="/">Back to home</a>
+    <br/><br/>
     <!-- Create a Form -->
     <form method="POST">
         <!-- Security token by Django -->
@@ -12,9 +14,8 @@
         <!-- form -->
 
         <div id="div_id_country" class="control-group">
-            <label for="id_country" class="control-label requiredField">
+            <label for="id_country">
                 Country
-                <span class="asteriskField">*</span> 
             </label>
             <div class="controls">
                 <input 
@@ -26,9 +27,8 @@
 
 
         <div id="div_id_city" class="control-group">
-            <label for="id_city" class="control-label requiredField">
+            <label for="id_city">
                 City
-                <span class="asteriskField">*</span> 
             </label>
             <div class="controls">
                 <input 
@@ -40,9 +40,8 @@
 
 
         <div id="div_id_num_guests" class="control-group">
-            <label for="id_num_guests" class="control-label requiredField">
-                Number of Guests
-                <span class="asteriskField">*</span> 
+            <label for="id_num_guests">
+                Number of Guests 
             </label>
             <div class="controls">
                 <input 

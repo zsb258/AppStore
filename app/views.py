@@ -46,18 +46,21 @@ def index(request):
 def view(request, id):
     """Shows the view details page"""
     
+    result_dict = dict()
+
     ## Use raw query to get a user
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM users WHERE email = %s", [id])
         selected_user = cursor.fetchone()
+    result_dict['user'] = selected_user
+
     with connection.cursor() as cursor:
         cursor.execute(
             "SELECT * FROM apartments ap, rentals r WHERE ap.apartment_id = r.apartment_id AND r.guest = %s",
             [id])
         selected_rentals = cursor.fetchone()
 
-    result_dict = {'user': selected_user}
-    result_dict = {'records': selected_rentals}
+    result_dict['records'] = selected_rentals
 
     return render(request,'app/view.html', result_dict)
 
