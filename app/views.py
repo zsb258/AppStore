@@ -160,7 +160,7 @@ def checkpw(request, id):
 
 
 
-def search(request, id):
+def search(request):
     """Shows the main page"""
     context = {}
     status = ''
