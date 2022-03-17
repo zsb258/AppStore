@@ -175,6 +175,8 @@ def checkpw(request, id):
                         return render(request, "app/edit.html", result_dict)
                     else:
                         status = 'Incorrect password'
+                        context = {'status': status}
+                        return render(request, "app/checkpw.html", context)
 
         elif request.POST['action'] == 'Update':
             with connection.cursor() as cursor:
