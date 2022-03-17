@@ -109,41 +109,42 @@ def edit(request, id):
 
     # dictionary for initial data with
     # field names as keys
-    context ={}
-
-    # fetch the object related to passed email and password
-
-    with connection.cursor() as cursor:
-        cursor.execute(
-            "SELECT * FROM users WHERE email = %s",
-            [id]
-            )
-        obj = cursor.fetchone()
-
+    context = {}
     status = ''
-    # save the data from the form
 
-    if request.POST:
-        ##TODO: date validation
-        with connection.cursor() as cursor:
-            cursor.execute(
-                "UPDATE users SET first_name = %s, last_name = %s, date_of_birth = %s, country = %s credit_card_type = %s credit_card_no = %s WHERE email = %s",
-                [
-                    request.POST['first_name'],
-                    request.POST['last_name'],
-                    request.POST['date_of_birth'],
-                    request.POST['country'],
-                    request.POST['credit_card_type'],
-                    request.POST['credit_card_no'],
-                    id
-                ]
-                )
-            status = 'User edited successfully!'
-            cursor.execute("SELECT * FROM users WHERE email = %s", [id])
-            obj = cursor.fetchone()
+    # # fetch the object related to passed email and password
+
+    # with connection.cursor() as cursor:
+    #     cursor.execute(
+    #         "SELECT * FROM users WHERE email = %s",
+    #         [id]
+    #         )
+    #     obj = cursor.fetchone()
+
+    # status = ''
+    # # save the data from the form
+
+    # if request.POST:
+    #     ##TODO: date validation
+    #     with connection.cursor() as cursor:
+    #         cursor.execute(
+    #             "UPDATE users SET first_name = %s, last_name = %s, date_of_birth = %s, country = %s credit_card_type = %s credit_card_no = %s WHERE email = %s",
+    #             [
+    #                 request.POST['first_name'],
+    #                 request.POST['last_name'],
+    #                 request.POST['date_of_birth'],
+    #                 request.POST['country'],
+    #                 request.POST['credit_card_type'],
+    #                 request.POST['credit_card_no'],
+    #                 id
+    #             ]
+    #             )
+    #         status = 'User edited successfully!'
+    #         cursor.execute("SELECT * FROM users WHERE email = %s", [id])
+    #         obj = cursor.fetchone()
 
 
-    context["obj"] = obj
+    # context["obj"] = obj
     context["status"] = status
  
     return render(request, "app/edit.html", context)
