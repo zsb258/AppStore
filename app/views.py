@@ -154,6 +154,13 @@ def checkpw(request, id):
     result_dict = {}
     status = ''
 
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT * FROM users WHERE email = %s",
+            [id]
+            )
+        obj = cursor.fetchone()
+
     if request.POST:
         if request.POST['action'] == 'enterpw':
         ## Check if email is already in the table
