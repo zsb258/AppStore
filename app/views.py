@@ -193,8 +193,8 @@ def search(request):
                 "Kota Bharu",
                 "1"
                 ])
-        users = cursor.fetchall()
+        apartments = cursor.fetchall()
 
-    result_dict = {'records': users}
+    result_dict = {'records': apartments}
 
-    return render(request,'app/search.html', context)
+    return render(request,'app/search.html', result_dict)

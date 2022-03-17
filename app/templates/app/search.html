@@ -80,17 +80,17 @@
             <th>House Rules</th>
             <th>Price</th>
         </thead>
-        {% for user in records %}
+        {% for apartment in records %}
         <tr>
-            <td> {{ user.2 }} </td>
-            <td> {{ user.3 }} </td>
-            <td> {{ user.5 }} </td>
-            <td> {{ user.6 }} </td>
-            <td> {{ user.7 }} </td>
-            <td> {{ user.8 }} </td>
-            <td> {{ user.9 }} </td>
-            <td> {{ user.10 }} </td>
-            <td> {{ user.11 }} </td>
+            <td> {{ apartment.2 }} </td>
+            <td> {{ apartment.3 }} </td>
+            <td> {{ apartment.5 }} </td>
+            <td> {{ apartment.6 }} </td>
+            <td> {{ apartment.7 }} </td>
+            <td> {{ apartment.8 }} </td>
+            <td> {{ apartment.9 }} </td>
+            <td> {{ apartment.10 }} </td>
+            <td> {{ apartment.11 }} </td>
         </tr>
         {% endfor %}
     </table>
