@@ -5,44 +5,32 @@
 </head> 
 <body>
     <h2>Search for Apartments</h2>
-    <br>
     <a href="search">
         <button>Search Apartments</button>
     </a>
 
 
+    <h2>View all Users</h2>
+    <a href="users">
+        <button>See Users</button>
+    </a>
 
-    <h2>Users in the App</h2>
-    <img src="{% static 'app/images/nus.jpg' %}" width="10%"   alt="NUS logo"/><br/>
-    <a href="add">New user</a>
-    <br/><br/>
-    <table border=1>
-        <thead>
-            <th>Email</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Action</th>
-        </thead>
-        {% for user in records %}
-        <tr>
-            <td> {{ user.2 }} </td>
-            <td> {{ user.0 }} </td>
-            <td> {{ user.1 }} </td>
-            <td>
-                <a href="view/{{ user.2 }}"><button>View</button></a> |
 
-                <a href="checkpw/{{ user.2 }}"><button>Edit</button></a> |
+    <h1>OPRA*</h1>
+    <p>
+        A webpage application for hospitality exchange services made using Django and Heroku with Raw SQL.
+        Webpage link: https://app-store-it2002-test.herokuapp.com/
+    </p>
+    <br/>
+    <h2>App Functionalities (planned):</h2>
+    <ul>
+        <li>Users include both hosts and customers.</li>
+        <li>Upon signing up for an account, users will have to insert their personal and credit card information.</li>
+        <li>In the case of the user being a host, he will need to insert the information about the room that he is putting up for rent. The host will be able to remove his apartment listing at any point in time as long as he has no upcoming rentals.</li>
+        <li>Customers will be able to search for available rooms by entering the city they want to stay in as well as their intended check-in and check-out dates. Unavailable rooms will not be shown.</li>
+        <li>Administrators can create, modify and delete all entries.</li>
 
-                <form method="POST" style="display: inline;">
-                {% csrf_token %}
-                    <input type="hidden" name="id" value="{{ user.2 }}"/>
-                    <button
-                    onclick="return confirm('Are you sure you want to delete {{ user.2 }}?');" 
-                    type="submit" name="action" value="delete">Delete</button> 
-                </form>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+    </ul>
+
 </body>
 </html>

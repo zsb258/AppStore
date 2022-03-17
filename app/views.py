@@ -6,39 +6,40 @@ from django.db import connection
 def index(request):
     """Shows the main page"""
 
-    ## Delete customer
-    if request.POST:
-        if request.POST['action'] == 'delete':
-            with connection.cursor() as cursor:
-                cursor.execute("DELETE FROM users WHERE email = %s", [request.POST['id']])
+    # ## Delete customer
+    # if request.POST:
+    #     if request.POST['action'] == 'delete':
+    #         with connection.cursor() as cursor:
+    #             cursor.execute("DELETE FROM users WHERE email = %s", [request.POST['id']])
 
 
-    if request.POST:
-        if request.POST['action'] == 'search':
-            with connection.cursor() as cursor:
-                cursor.execute(
-                "SELECT * FROM apartments WHERE country = %s AND city = %s AND num_guests >= %s",
-                [
-                    request.POST['country'],
-                    request.POST['city'],
-                    request.POST['num_guests']
-                ])                
-                apartments = cursor.fetchall()
+    # if request.POST:
+    #     if request.POST['action'] == 'search':
+    #         with connection.cursor() as cursor:
+    #             cursor.execute(
+    #             "SELECT * FROM apartments WHERE country = %s AND city = %s AND num_guests >= %s",
+    #             [
+    #                 request.POST['country'],
+    #                 request.POST['city'],
+    #                 request.POST['num_guests']
+    #             ])                
+    #             apartments = cursor.fetchall()
 
-                result_dict = {'records': apartments}
+    #             result_dict = {'records': apartments}
 
-                return redirect(request,'search', result_dict)
+    #             return redirect(request,'search', result_dict)
 
 
 
-    ## Use raw query to get all objects
-    with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM users ORDER BY first_name")
-        users = cursor.fetchall()
+    # ## Use raw query to get all objects
+    # with connection.cursor() as cursor:
+    #     cursor.execute("SELECT * FROM users ORDER BY first_name")
+    #     users = cursor.fetchall()
 
-    result_dict = {'records': users}
+    # result_dict = {'records': users}
 
-    return render(request,'app/index.html', result_dict)
+    # return render(request,'app/index.html', result_dict)
+    return render(request, 'app/index.html')
 
 
 
@@ -261,3 +262,42 @@ def apartment(request, id):
     result_dict['apt'] = selected_apt
 
     return render(request,'app/apartment.html', result_dict)
+
+
+
+def users(request):
+    """Shows the view details page"""
+    
+    ## Delete customer
+    if request.POST:
+        if request.POST['action'] == 'delete':
+            with connection.cursor() as cursor:
+                cursor.execute("DELETE FROM users WHERE email = %s", [request.POST['id']])
+
+
+    if request.POST:
+        if request.POST['action'] == 'search':
+            with connection.cursor() as cursor:
+                cursor.execute(
+                "SELECT * FROM apartments WHERE country = %s AND city = %s AND num_guests >= %s",
+                [
+                    request.POST['country'],
+                    request.POST['city'],
+                    request.POST['num_guests']
+                ])                
+                apartments = cursor.fetchall()
+
+                result_dict = {'records': apartments}
+
+                return redirect(request,'search', result_dict)
+
+
+
+    ## Use raw query to get all objects
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM users ORDER BY first_name")
+        users = cursor.fetchall()
+
+    result_dict = {'records': users}
+
+    return render(request,'app/users.html', result_dict)

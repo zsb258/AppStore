@@ -1,0 +1,42 @@
+{% load static %}
+<html>
+<head>
+    <title>All Users</title>
+</head> 
+<body>
+    <h2>List of Users</h2>
+    <a href="/">Back to home</a>
+    <br/><br/>
+    <h2>Users in the App</h2>
+    <a href="add">New user</a>
+    <br/><br/>
+    <table border=1>
+        <thead>
+            <th>Email</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Action</th>
+        </thead>
+        {% for user in records %}
+        <tr>
+            <td> {{ user.2 }} </td>
+            <td> {{ user.0 }} </td>
+            <td> {{ user.1 }} </td>
+            <td>
+                <a href="view/{{ user.2 }}"><button>View</button></a> |
+
+                <a href="checkpw/{{ user.2 }}"><button>Edit</button></a> |
+
+                <form method="POST" style="display: inline;">
+                {% csrf_token %}
+                    <input type="hidden" name="id" value="{{ user.2 }}"/>
+                    <button
+                    onclick="return confirm('Are you sure you want to delete {{ user.2 }}?');" 
+                    type="submit" name="action" value="delete">Delete</button> 
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
