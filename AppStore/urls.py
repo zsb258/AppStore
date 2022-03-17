@@ -26,5 +26,5 @@ urlpatterns = [
     path('view/<str:id>', app.views.view, name='view'),
     path('checkpw/<str:id>', app.views.checkpw, name='checkpw'),
     path('search', app.views.search, name='search'),
-    path('apartment', app.views.apartment, name='apartment')
+    path('apartment/<str:id>', app.views.apartment, name='apartment')
 ]
