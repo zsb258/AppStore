@@ -1,3 +1,4 @@
+from readline import insert_text
 from django.shortcuts import render, redirect
 from django.db import connection
 
@@ -38,6 +39,8 @@ def add(request):
     context = {}
     status = ''
 
+    insert_statement_sql = "INSERT INTO users (first_name, last_name, email, password, date_of_birth, country, credit_card_type, credit_card_no) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+
     if request.POST:
         ## Check if email is already in the table
         with connection.cursor() as cursor:
@@ -48,7 +51,7 @@ def add(request):
             if user == None:
                 ##TODO: date validation
                 cursor.execute(
-                    "INSERT INTO users VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+                    insert_statement_sql,
                     [
                     request.POST['first_name'],
                     request.POST['last_name'],
