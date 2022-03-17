@@ -38,7 +38,9 @@ def index(request):
 
     result_dict = {'records': users}
 
-    return render(request,'app/index.html',result_dict)
+    return render(request,'app/index.html', result_dict)
+
+
 
 # Create your views here.
 def view(request, id):
@@ -51,6 +53,8 @@ def view(request, id):
     result_dict = {'user': selected_user}
 
     return render(request,'app/view.html', result_dict)
+
+
 
 # Create your views here.
 def add(request):
@@ -137,7 +141,7 @@ def edit(request, id):
 
 
 def checkpw(request, id):
-    context = {}
+    result_dict = {}
     status = ''
 
     if request.POST:
@@ -148,15 +152,13 @@ def checkpw(request, id):
         
             if user != None:
                 if user[3] == request.POST['password']:
-                    return redirect('edit')
+                    return render(request, "app/edit.html", result_dict)
                 else:
                     status = 'Incorrect password'
 
+    context = {"status": status}
 
-    context['status'] = status
-
-
-    return render(request, "app/checkpw.html", context)
+    return render(request, "app/checkpw.html")
 
 
 
@@ -181,7 +183,6 @@ def search(request):
 
                 return render(request,'app/search.html', result_dict)
 
+    context['status'] = status
 
-    result_dict = {'records': apartments}
-
-    return render(request,'app/search.html', result_dict)
+    return render(request,'app/search.html', context)
