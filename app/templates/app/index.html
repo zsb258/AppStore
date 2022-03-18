@@ -1,9 +1,12 @@
 {% load static %}
 <html>
 <head>
-    <title>Homepage</title>
-</head> 
+    <title>OPRA8 | Homepage</title>
+    <link rel = "stylesheet", href = "{% static '/app/style.css'%}">
+</head>
+
 <body>
+    <img src="{% static 'app/images/home1.jpg' %}" width="50%"   alt="home image"/><br/>
     <h2>Search for Apartments</h2>
     <a href="search">
         <button>Search Apartments</button>
