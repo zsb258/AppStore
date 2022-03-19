@@ -45,7 +45,10 @@ def index(request):
 
 # Create your views here.
 def view(request, id):
-    """Shows the view details page"""
+    """
+    Shows the view user details page, 
+    which include user details and rental data
+    """
     
     result_dict = dict()
 
@@ -57,7 +60,11 @@ def view(request, id):
 
     with connection.cursor() as cursor:
         cursor.execute(
-            "SELECT * FROM apartments ap, rentals r WHERE ap.apartment_id = r.apartment_id AND r.guest = %s",
+            """
+            SELECT * 
+            FROM apartments ap, rentals r 
+            WHERE ap.apartment_id = r.apartment_id 
+            AND r.guest = %s""",
             [id])
         selected_rentals = cursor.fetchall()
 
@@ -69,7 +76,7 @@ def view(request, id):
 
 # Create your views here.
 def add(request):
-    """Shows the main page"""
+    """Shows the user registration page"""
     context = {}
     status = ''
 
@@ -83,7 +90,10 @@ def add(request):
             if user == None:
                 ##TODO: date validation
                 cursor.execute(
-                    "INSERT INTO users (first_name, last_name, email, password, date_of_birth, country, credit_card_type, credit_card_no) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+                    """
+                    INSERT INTO users 
+                    (first_name, last_name, email, password, date_of_birth, country, credit_card_type, credit_card_no) 
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""",
                     [
                         request.POST['first_name'],
                         request.POST['last_name'],
@@ -153,6 +163,7 @@ def edit(request, id):
 
 
 def checkpw(request, id):
+    """Shows page to enter password and allow user to edit own details once password matches"""
     result_dict = {}
     status = ''
 
@@ -182,7 +193,15 @@ def checkpw(request, id):
         elif request.POST['action'] == 'Update':
             with connection.cursor() as cursor:
                 cursor.execute(
-                    "UPDATE users SET first_name = %s, last_name = %s, date_of_birth = %s, country = %s, credit_card_type = %s, credit_card_no = %s WHERE email = %s",
+                    """
+                    UPDATE users SET 
+                    first_name = %s, 
+                    last_name = %s, 
+                    date_of_birth = %s, 
+                    country = %s, 
+                    credit_card_type = %s, 
+                    credit_card_no = %s 
+                    WHERE email = %s""",
                     [
                         request.POST['first_name'],
                         request.POST['last_name'],
@@ -206,7 +225,7 @@ def checkpw(request, id):
 
 
 def search(request):
-    """Shows the main page"""
+    """Shows the search page for apartments"""
     context = {}
     status = ''
 
@@ -214,7 +233,14 @@ def search(request):
         if request.POST['action'] == 'search':
             with connection.cursor() as cursor:
                 cursor.execute(
-                "SELECT * FROM apartments apt, overall_ratings rts WHERE apt.apartment_id = rts.apartment_id AND country = %s AND city = %s AND num_guests >= %s ORDER BY apt.price",
+                """
+                SELECT * 
+                FROM apartments apt, overall_ratings rts 
+                WHERE apt.apartment_id = rts.apartment_id 
+                AND country = %s 
+                AND city = %s 
+                AND num_guests >= %s 
+                ORDER BY apt.price""",
                 [
                     request.POST['country'],
                     request.POST['city'],
@@ -240,7 +266,13 @@ def search(request):
         """
 
         with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM apartments apt, overall_ratings rts WHERE apt.apartment_id = rts.apartment_id ORDER BY apt.price"),
+            cursor.execute(
+                """
+                SELECT * 
+                FROM apartments apt, overall_ratings rts 
+                WHERE apt.apartment_id = rts.apartment_id 
+                ORDER BY apt.price
+                """),
             apartments = cursor.fetchall()
 
         result_dict = {'records': apartments}
@@ -249,7 +281,7 @@ def search(request):
 
 
 def apartment(request, id):
-    """Shows the view details page"""
+    """Shows the apartment details page"""
     
     result_dict = dict()
 
@@ -271,7 +303,7 @@ def apartment(request, id):
 
 
 def users(request):
-    """Shows the view details page"""
+    """Shows all users in page"""
     
     ## Delete customer
     if request.POST:
