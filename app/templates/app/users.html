@@ -26,17 +26,17 @@
         </thead>
         {% for user in records %}
         <tr>
-            <td> {{ user.2 }} </td>
-            <td> {{ user.0 }} </td>
-            <td> {{ user.1 }} </td>
+            <td> {{ user.email }} </td>
+            <td> {{ user.first_name }} </td>
+            <td> {{ user.last_name }} </td>
             <td>
-                <a href="view/{{ user.2 }}"><button>View</button></a> |
+                <a href="view/{{ user.email }}"><button>View</button></a> |
 
-                <a href="checkpw/{{ user.2 }}"><button>Edit</button></a> |
+                <a href="checkpw/{{ user.email }}"><button>Edit</button></a> |
 
                 <form method="POST" style="display: inline;">
                 {% csrf_token %}
-                    <input type="hidden" name="id" value="{{ user.2 }}"/>
+                    <input type="hidden" name="id" value="{{ user.email }}"/>
                     <button
                     onclick="return confirm('Are you sure you want to delete {{ user.2 }}?');" 
                     type="submit" name="action" value="delete">Delete</button> 

@@ -2,6 +2,8 @@ from readline import insert_text
 from django.shortcuts import render, redirect
 from django.db import connection
 
+from app.helper.db_fns import *
+
 # Create your views here.
 def index(request):
     """Shows the main page"""
@@ -37,6 +39,8 @@ def index(request):
     #     users = cursor.fetchall()
 
     # result_dict = {'records': users}
+
+
 
     # return render(request,'app/index.html', result_dict)
     return render(request, 'app/index.html')
@@ -313,10 +317,9 @@ def users(request):
 
 
 
-    ## Use raw query to get all objects
-    with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM users ORDER BY first_name")
-        users = cursor.fetchall()
+    ## Call function defined in db_fns.py
+    ## which masks raw query in python function
+    users = get_all_users()
 
     result_dict = {'records': users}
 
