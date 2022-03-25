@@ -23,9 +23,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', app.views.index, name='index'),
     path('add', app.views.add, name='add'),
-    path('view/<str:id>', app.views.view, name='view'),
-    path('checkpw/<str:id>', app.views.checkpw, name='checkpw'),
+    path('view/<str:userid>', app.views.view, name='view'),
+    path('checkpw/<str:userid>', app.views.checkpw, name='checkpw'),
     path('search', app.views.search, name='search'),
-    path('apartment/<str:id>', app.views.apartment, name='apartment'),
+    path('apartment/<int:apt_id>', app.views.apartment, name='apartment'),
     path('users', app.views.users, name='users')
 ]

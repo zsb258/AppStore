@@ -48,7 +48,7 @@ def index(request):
 
 
 # Create your views here.
-def view(request, id):
+def view(request, userid):
     """
     Shows the view user details page, 
     which include user details and rental data
@@ -58,7 +58,7 @@ def view(request, id):
 
     ## Use raw query to get a user
     with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM users WHERE email = %s", [id])
+        cursor.execute("SELECT * FROM users WHERE email = %s", [userid])
         selected_user = cursor.fetchone()
     result_dict['user'] = selected_user
 
@@ -69,7 +69,7 @@ def view(request, id):
             FROM apartments ap, rentals r 
             WHERE ap.apartment_id = r.apartment_id 
             AND r.guest = %s""",
-            [id])
+            [userid])
         selected_rentals = cursor.fetchall()
 
     result_dict['records'] = selected_rentals
@@ -166,7 +166,7 @@ def edit(request, id):
 
 
 
-def checkpw(request, id):
+def checkpw(request, userid):
     """Shows page to enter password and allow user to edit own details once password matches"""
     result_dict = {}
     status = ''
@@ -174,7 +174,7 @@ def checkpw(request, id):
     with connection.cursor() as cursor:
         cursor.execute(
             "SELECT * FROM users WHERE email = %s",
-            [id]
+            [userid]
             )
         obj = cursor.fetchone()
 
@@ -213,11 +213,11 @@ def checkpw(request, id):
                         request.POST['country'],
                         request.POST['credit_card_type'],
                         request.POST['credit_card_no'],
-                        id
+                        userid
                     ]
                     )
                 status = 'User edited successfully!'
-                cursor.execute("SELECT * FROM users WHERE email = %s", [id])
+                cursor.execute("SELECT * FROM users WHERE email = %s", [userid])
                 obj = cursor.fetchone()
 
             context = {'status': status}
@@ -284,7 +284,7 @@ def search(request):
         return render(request,'app/search.html', result_dict)
 
 
-def apartment(request, id):
+def apartment(request, apt_id):
     """Shows the apartment details page"""
     
     result_dict = dict()
@@ -298,7 +298,7 @@ def apartment(request, id):
             WHERE apt.apartment_id = rts.apartment_id 
             AND apt.apartment_id = %s
             """,
-            [id])
+            [apt_id])
         selected_apt = cursor.fetchone()
     result_dict['apt'] = selected_apt
 
