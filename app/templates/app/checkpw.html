@@ -7,6 +7,8 @@
     <a href="/">Back to home</a>
     <br/><br/>
     <h2>Enter password for {{ obj.2 }}</h2>
+    <p style="color:red">{{ status|safe }}</p>
+    
     <form method="POST" style="display: inline;">
         {% csrf_token %} 
         <div id="div_id_password" class="control-group">
@@ -25,6 +27,7 @@
         <button type="submit" name="action" value="enterpw">Enter</button>
     
     </form>
+
     
 
 </body>

@@ -7,7 +7,7 @@ from django.http import QueryDict
 
 
 def dictfetchall_(cursor):
-    "Return all rows from a cursor as a dict"
+    """Return all rows from a cursor as a dict"""
     columns = [col[0] for col in cursor.description]
     return [
         dict(zip(columns, row))
@@ -89,9 +89,59 @@ def insert_user(form: QueryDict) -> str:
     
     return status
 
+def authenticate_pw(pw:str, userid:str) -> bool:
+    """Return True if password matches record in databse, else False"""
+    with connection.cursor() as cursor:
+        cursor.execute(
+            """
+            SELECT (password = %s)
+            FROM users
+            WHERE email = %s
+            """,
+            [pw, userid])
+        res = cursor.fetchone()
+        if res == None:
+            return False
+        else:
+            return res[0]
 
 
-if __name__ == "__main___":
-    records = get_all_users()
-    for k, v in records:
-        print(k, v)
+def update_user(form: QueryDict, userid:str) -> str:
+    """
+    Returns status message of the update
+        If update is successful: return success message
+        Else: return error message
+    """
+    status = ''
+
+    with connection.cursor() as cursor:
+        try:
+            cursor.execute(
+                """
+                UPDATE users SET 
+                first_name = %s, 
+                last_name = %s, 
+                date_of_birth = %s, 
+                country = %s, 
+                credit_card_type = %s, 
+                credit_card_no = %s 
+                WHERE email = %s""",
+                [
+                    form['first_name'],
+                    form['last_name'],
+                    form['date_of_birth'],
+                    form['country'],
+                    form['credit_card_type'],
+                    form['credit_card_no'],
+                    userid
+                ]
+                )
+            status = 'User edited successfully!'
+       
+        except IntegrityError as e:
+            e_msg = str(e.__cause__)
+            # regex search to find the column that violated integrity constraint
+            constraint = re.findall(r'(?<=\")[A-Za-z\_]*(?=\")', e_msg)[1]
+            status = f'Violated constraint: {constraint}. Please follow the required format.'
+
+    return status
