@@ -2,7 +2,7 @@ from readline import insert_text
 from django.shortcuts import render, redirect
 from django.db import connection
 
-from app.helper.db_fns import *
+from app.helper import queries
 
 # Create your views here.
 def index(request):
@@ -85,34 +85,7 @@ def add(request):
     status = ''
 
     if request.POST:
-        ## Check if email is already in the table
-        with connection.cursor() as cursor:
-
-            cursor.execute("SELECT * FROM users WHERE email = %s", [request.POST['email']])
-            user = cursor.fetchone()
-            ## No user with same email
-            if user == None:
-                ##TODO: date validation
-                cursor.execute(
-                    """
-                    INSERT INTO users 
-                    (first_name, last_name, email, password, date_of_birth, country, credit_card_type, credit_card_no) 
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""",
-                    [
-                        request.POST['first_name'],
-                        request.POST['last_name'],
-                        request.POST['email'],
-                        request.POST['password'],
-                        request.POST['date_of_birth'],
-                        request.POST['country'],
-                        request.POST['credit_card_type'],
-                        request.POST['credit_card_no']
-                    ]
-                    )
-                return redirect('index')    
-            else:
-                status = 'User with email %s already exists' % (request.POST['email'])
-
+        status = queries.insert_user(request.POST)
 
     context['status'] = status
  
@@ -319,7 +292,7 @@ def users(request):
 
     ## Call function defined in db_fns.py
     ## which masks raw query in python function
-    users = get_all_users()
+    users = queries.get_all_users()
 
     result_dict = {'records': users}
 
